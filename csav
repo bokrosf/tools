@@ -69,7 +69,7 @@ pull()
 push()
 {
   enforce_initialization
-  cd "$config_root_path"
+  cd "$(config_root_path)"
   git push
 }
 
