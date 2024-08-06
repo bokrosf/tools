@@ -19,7 +19,8 @@ enforce_initialization()
 {
   if [[ ! -d $(config_root_path)/.git ]]
   then
-    print_error "not a git repository: '$(config_root_path)'"
+    print_error "init required, not a git repository: '$(config_root_path)'"
+    echo "  use \"csav init\" to clone the repository"
     exit 1
   fi
 }
