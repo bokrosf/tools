@@ -79,12 +79,25 @@ add()
   git add *
 }
 
+addcomm()
+{
+  add "$@"
+  commit
+}
+
 restore()
 {
   enforce_initialization
   cd "$(config_root_path)"
   git restore --staged *
   git clean -dfx
+}
+
+commit()
+{
+  enforce_initialization
+  cd "$(config_root_path)"
+  git commit -m "$(date)"
 }
 
 pull()
@@ -142,7 +155,7 @@ fi
 readonly command="$1"
 
 case "$command" in
-  help | init | add | restore | pull | push | diff | jump)
+  help | init | add | addcomm | restore | commit | pull | push | diff | jump)
     shift
     eval "$command $@"
     ;;
