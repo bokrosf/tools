@@ -98,22 +98,12 @@ then
   exit 1
 fi
 
-case "$1" in
-  help)
-    help
-    ;;
-  init)
-    init
-    ;;
-  pull)
-    pull
-    ;;
-  push)
-    push
-    ;;
-  diff)
+readonly command="$1"
+
+case "$command" in
+  help | init | add | pull | push | diff)
     shift
-    diff "$@"
+    eval "$command $@"
     ;;
   "")
     print_error "no operation specified (use 'help' for help)"
