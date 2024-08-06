@@ -59,6 +59,13 @@ init()
   echo "initialized"
 }
 
+pull()
+{
+  enforce_initialization
+  cd "$(config_root_path)"
+  git pull
+}
+
 if [[ -z $config_checkout_path ]]
 then
   print_error "'config_checkout_path' variable must be set"
@@ -83,6 +90,9 @@ case "$1" in
     ;;
   init)
     init
+    ;;
+  pull)
+    pull
     ;;
   "")
     print_error "no operation specified (use 'help' for help)"
