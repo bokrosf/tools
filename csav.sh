@@ -15,6 +15,15 @@ config_root_path()
   echo "$config_checkout_path/$repository_name"
 }
 
+enforce_initialization()
+{
+  if [[ ! -d $(config_root_path)/.git ]]
+  then
+    print_error "not a git repository: '$(config_root_path)'"
+    exit 1
+  fi
+}
+
 help()
 {
   # TODO Implement displaying usage.
@@ -36,12 +45,6 @@ fi
 if [[ -z $repository_url ]]
 then
   print_error "'repository_url' variable must be set"
-  exit 1
-fi
-
-if [[ ! -d $(config_root_path)/.git ]]
-then
-  print_error "not a git repository: '$(config_root_path)'"
   exit 1
 fi
 
