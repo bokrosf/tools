@@ -66,6 +66,13 @@ pull()
   git pull
 }
 
+push()
+{
+  enforce_initialization
+  cd "$config_root_path"
+  git push
+}
+
 if [[ -z $config_checkout_path ]]
 then
   print_error "'config_checkout_path' variable must be set"
@@ -93,6 +100,9 @@ case "$1" in
     ;;
   pull)
     pull
+    ;;
+  push)
+    push
     ;;
   "")
     print_error "no operation specified (use 'help' for help)"
