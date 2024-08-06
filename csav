@@ -60,6 +60,25 @@ init()
   echo "initialized"
 }
 
+add()
+{
+  enforce_initialization
+
+  for path in "$@"
+  do
+    if [[ $path =~ ~* ]]
+    then
+      home_expansion="echo \"$path\" | sed 's|~|$HOME|'"
+      path=$(eval "$home_expansion")
+    fi
+    
+    cp -r --parent "$(realpath "$path")" "$(config_root_path)"
+  done
+  
+  cd "$(config_root_path)"
+  git add *
+}
+
 pull()
 {
   enforce_initialization
