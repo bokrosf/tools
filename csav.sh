@@ -30,6 +30,34 @@ help()
   echo "help"
 }
 
+init()
+{
+  if [[ -d $(config_root_path)/.git ]]
+  then
+    echo "initialized"
+    return 0
+  fi
+
+  mkdir -p "$(config_root_path)"
+
+  if [[ $? -ne 0 ]]
+  then
+    print_error "directory creation failed -- '$(config_root_path)'"
+    exit 1
+  fi
+
+  git clone "$repository_url" "$(config_root_path)"
+
+  if [[ $? -ne 0 ]]
+  then
+    rm -rf "$(config_root_path)"
+    print_error "repository cloning failed -- '$repository_url'"
+    exit 1
+  fi
+
+  echo "initialized"
+}
+
 if [[ -z $config_checkout_path ]]
 then
   print_error "'config_checkout_path' variable must be set"
@@ -51,6 +79,9 @@ fi
 case "$1" in
   help)
     help
+    ;;
+  init)
+    init
     ;;
   "")
     print_error "no operation specified (use 'help' for help)"
