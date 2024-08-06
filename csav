@@ -79,6 +79,14 @@ add()
   git add *
 }
 
+restore()
+{
+  enforce_initialization
+  cd "$(config_root_path)"
+  git restore --staged *
+  git clean -dfx
+}
+
 pull()
 {
   enforce_initialization
@@ -134,7 +142,7 @@ fi
 readonly command="$1"
 
 case "$command" in
-  help | init | add | pull | push | diff | jump)
+  help | init | add | restore | pull | push | diff | jump)
     shift
     eval "$command $@"
     ;;
