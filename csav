@@ -4,6 +4,7 @@
 # readonly config_checkout_path="$HOME"
 # readonly repository_name="configs"
 # readonly repository_url="https://github.com/<user_name>/$repository_name"
+# readonly jump_terminal_command='alacritty --working-directory "$(config_root_path)" &'
 
 print_error()
 {
@@ -80,6 +81,19 @@ diff()
   git diff "$@"
 }
 
+jump()
+{
+  enforce_initialization
+
+  if [[ -z $jump_terminal_command ]]
+  then
+    print_error "can not jump to '$(config_root_path)', 'jump_terminal_command' variable must be set"
+    exit 1
+  fi
+
+  eval "$jump_terminal_command"
+}
+
 if [[ -z $config_checkout_path ]]
 then
   print_error "'config_checkout_path' variable must be set"
@@ -101,7 +115,7 @@ fi
 readonly command="$1"
 
 case "$command" in
-  help | init | add | pull | push | diff)
+  help | init | add | pull | push | diff | jump)
     shift
     eval "$command $@"
     ;;
