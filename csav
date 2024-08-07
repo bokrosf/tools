@@ -139,6 +139,11 @@ apply()
   done
 }
 
+backup()
+{
+  add $(list)
+}
+
 restore()
 {
   enforce_initialization
@@ -217,6 +222,7 @@ case "$command" in
   | addcomm \
   | rm \
   | apply \
+  | backup \
   | restore \
   | commit \
   | pull \
