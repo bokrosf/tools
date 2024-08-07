@@ -75,6 +75,12 @@ init()
   echo "initialized"
 }
 
+list()
+{
+  find "$(config_root_path)" -type f ! -path "*.git*" ! -path "*README.md" \
+    | sed "s|"$(config_root_path)"||"
+}
+
 add()
 {
   enforce_initialization
@@ -190,6 +196,7 @@ readonly command="$1"
 case "$command" in
   help \
   | init \
+  | list \
   | add \
   | addcomm \
   | apply \
