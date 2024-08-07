@@ -36,6 +36,11 @@ enforce_initialization()
   fi
 }
 
+access_config_git()
+{
+  git -C "$(config_root_path)" "$@"
+}
+
 help()
 {
   # TODO Implement displaying usage.
@@ -84,8 +89,7 @@ add()
     cp -a --parent "$(realpath "$path")" "$(config_root_path)"
   done
   
-  cd "$(config_root_path)"
-  git add *
+  access_config_git add "*"
 }
 
 addcomm()
@@ -116,44 +120,38 @@ apply()
 restore()
 {
   enforce_initialization
-  cd "$(config_root_path)"
-  git restore --staged *
-  git clean -dfx
+  access_config_git restore --staged "*"
+  access_config_git clean -dfx
 }
 
 commit()
 {
   enforce_initialization
-  cd "$(config_root_path)"
-  git commit -m "$(date)"
+  access_config_git commit -m "$(date)"
 }
 
 pull()
 {
   enforce_initialization
-  cd "$(config_root_path)"
-  git pull
+  access_config_git pull
 }
 
 push()
 {
   enforce_initialization
-  cd "$(config_root_path)"
-  git push
+  access_config_git push
 }
 
 status()
 {
   enforce_initialization
-  cd "$(config_root_path)"
-  git status
+  access_config_git status
 }
 
 diff()
 {
   enforce_initialization
-  cd "$(config_root_path)"
-  git diff "$@"
+  access_config_git diff "$@"
 }
 
 jump()
