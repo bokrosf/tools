@@ -81,7 +81,7 @@ add()
       path="$(echo "$path" | sed "s|~|$(home_path)|")"
     fi
     
-    cp -r --parent "$(realpath "$path")" "$(config_root_path)"
+    cp -a --parent "$(realpath "$path")" "$(config_root_path)"
   done
   
   cd "$(config_root_path)"
