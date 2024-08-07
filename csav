@@ -94,6 +94,25 @@ addcomm()
   commit
 }
 
+apply()
+{
+  local destination_path="$1"
+
+  if [[ -z "$destination_path" ]]
+  then
+    print_error "destination path must be supplied"
+    exit 1
+  fi
+
+  enforce_initialization
+  cd "$(config_root_path)"
+
+  for saved_item in $(ls -A | grep -v -e '.git' -e 'README.md')
+  do
+    cp -a "$saved_item" "$destination_path"
+  done
+}
+
 restore()
 {
   enforce_initialization
@@ -164,7 +183,7 @@ fi
 readonly command="$1"
 
 case "$command" in
-  help | init | add | addcomm | restore | commit | pull | push | diff | jump)
+  help | init | add | addcomm | apply | restore | commit | pull | push | diff | jump)
     shift
     $command "$@"
     ;;
