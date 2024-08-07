@@ -111,6 +111,15 @@ addcomm()
   commit
 }
 
+rm()
+{
+  for path in "$@"
+  do
+    path="$(resolve_path "$path")"
+    access_config_git rm -r "$path"
+  done
+}
+
 apply()
 {
   local destination_path="$1"
@@ -206,6 +215,7 @@ case "$command" in
   | list \
   | add \
   | addcomm \
+  | rm \
   | apply \
   | restore \
   | commit \
