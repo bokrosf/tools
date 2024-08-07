@@ -16,6 +16,16 @@ config_root_path()
   echo "$config_checkout_path/$repository_name"
 }
 
+home_path()
+{
+  if [[ -n $SUDO_USER ]]
+  then
+    echo "/home/$SUDO_USER"
+  else
+    echo "$HOME"
+  fi
+}
+
 enforce_initialization()
 {
   if [[ ! -d $(config_root_path)/.git ]]
@@ -68,8 +78,7 @@ add()
   do
     if [[ $path =~ ~* ]]
     then
-      home_expansion="echo \"$path\" | sed 's|~|$HOME|'"
-      path=$(eval "$home_expansion")
+      path="$(echo "$path" | sed "s|~|$(home_path)|")"
     fi
     
     cp -r --parent "$(realpath "$path")" "$(config_root_path)"
@@ -157,7 +166,7 @@ readonly command="$1"
 case "$command" in
   help | init | add | addcomm | restore | commit | pull | push | diff | jump)
     shift
-    eval "$command $@"
+    $command "$@"
     ;;
   "")
     print_error "no operation specified (use 'help' for help)"
