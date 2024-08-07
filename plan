@@ -24,3 +24,6 @@
 # $ csav -d
 # $ csav -a
 # $ csav -a etc/systemd/network
+
+# README.md and .git directory excluded from the item list.
+# for config_path in $(find "$(config_root_path)" -type f ! -path "*.git*" ! -path "*README.md")
