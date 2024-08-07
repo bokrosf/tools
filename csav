@@ -26,6 +26,17 @@ home_path()
   fi
 }
 
+resolve_path()
+{
+  if [[ $1 =~ ~* ]]
+  then
+    echo "$(echo "$1" | sed "s|~|$(home_path)|")"
+    return 0
+  fi
+  
+  echo "$1"
+}
+
 enforce_initialization()
 {
   if [[ ! -d $(config_root_path)/.git ]]
@@ -87,11 +98,7 @@ add()
 
   for path in "$@"
   do
-    if [[ $path =~ ~* ]]
-    then
-      path="$(echo "$path" | sed "s|~|$(home_path)|")"
-    fi
-    
+    path="$(resolve_path "$path")"
     cp -a --parent "$(realpath "$path")" "$(config_root_path)"
   done
   
