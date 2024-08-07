@@ -183,7 +183,17 @@ fi
 readonly command="$1"
 
 case "$command" in
-  help | init | add | addcomm | apply | restore | commit | pull | push | diff | jump)
+  help \
+  | init \
+  | add \
+  | addcomm \
+  | apply \
+  | restore \
+  | commit \
+  | pull \
+  | push \
+  | diff \
+  | jump)
     shift
     $command "$@"
     ;;
