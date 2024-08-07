@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Downloads Arch Linux ISO
+
+url_file_name="archlinux-x86_64.iso"
+output="--output $url_file_name"
+
+if [[ -n $1 ]]
+then
+  output="--output $1"
+fi
+
+curl $output "https://geo.mirror.pkgbuild.com/iso/latest/$url_file_name"
