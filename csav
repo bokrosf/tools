@@ -142,6 +142,13 @@ push()
   git push
 }
 
+status()
+{
+  enforce_initialization
+  cd "$(config_root_path)"
+  git status
+}
+
 diff()
 {
   enforce_initialization
@@ -192,6 +199,7 @@ case "$command" in
   | commit \
   | pull \
   | push \
+  | status \
   | diff \
   | jump)
     shift
