@@ -37,6 +37,15 @@ resolve_path()
   echo "$1"
 }
 
+require_root_privilege()
+{
+  if [[ $(id -u) -ne 0 ]]
+  then
+    print_error "must be superuser to perform this operation"
+    exit 1
+  fi
+}
+
 enforce_initialization()
 {
   if [[ ! -d $(config_root_path)/.git ]]
