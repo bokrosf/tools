@@ -131,6 +131,7 @@ rm()
 
 apply()
 {
+  require_root_privilege  
   local destination_path="$1"
 
   if [[ -z "$destination_path" ]]
