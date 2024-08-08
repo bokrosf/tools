@@ -2,7 +2,7 @@
 
 # Configurable variables
 # readonly config_checkout_path="/home/<user_name>"
-readonly repository_name="configs"
+# readonly repository_name="configs"
 # readonly repository_url="https://github.com/<user_name>/$repository_name"
 # readonly jump_terminal_command='alacritty --working-directory "$(config_root_path)" &'
 
