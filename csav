@@ -33,7 +33,7 @@ resolve_path()
     echo "$(echo "$1" | sed "s|~|$(home_path)|")"
     return 0
   fi
-  
+
   echo "$1"
 }
 
@@ -69,6 +69,9 @@ help()
 
 init()
 {
+  require_root_privilege
+
+  # Obtaining the repository.
   if [[ -d $(config_root_path)/.git ]]
   then
     echo "initialized"
@@ -92,6 +95,32 @@ init()
     exit 1
   fi
 
+  # Setting privileges of files and directories.
+  owner_user_name="$SUDO_USER"
+
+  if [[ -z $owner_user_name ]]
+  then
+    owner_user_name="$USER"
+  fi
+
+  chown -R "$owner_user_name": "$(config_root_path)"
+  cd "$(config_root_path)"
+
+  for root_item in $(ls -A | grep -v -e '.git' -e 'README.md' -e 'home')
+  do
+    chown -R root: "$root_item"
+  done
+
+  if [[ -e home ]]
+  then
+    chown root: home
+  fi
+
+  for user_name in $(ls -A home)
+  do
+    chown -R "$user_name": "home/$user_name"
+  done
+
   echo "initialized"
 }
 
@@ -110,7 +139,7 @@ add()
     path="$(resolve_path "$path")"
     cp -a --parent "$(realpath "$path")" "$(config_root_path)"
   done
-  
+
   access_config_git add "*"
 }
 
@@ -131,7 +160,7 @@ rm()
 
 apply()
 {
-  require_root_privilege  
+  require_root_privilege
   local destination_path="$1"
 
   if [[ -z "$destination_path" ]]
