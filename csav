@@ -131,7 +131,7 @@ rm()
 {
   for path in "$@"
   do
-    access_config_git rm -r "$path"
+    access_config_git rm -r "$(config_root_path)$path"
   done
 }
 
@@ -160,41 +160,11 @@ backup()
   add $(list)
 }
 
-restore()
+restoreall()
 {
   enforce_initialization
-  access_config_git restore --staged "*"
+  access_config_git restore -S -W "*"
   access_config_git clean -dfx
-}
-
-commit()
-{
-  enforce_initialization
-  access_config_git commit -m "$(date)"
-}
-
-pull()
-{
-  enforce_initialization
-  access_config_git pull
-}
-
-push()
-{
-  enforce_initialization
-  access_config_git push
-}
-
-status()
-{
-  enforce_initialization
-  access_config_git status
-}
-
-diff()
-{
-  enforce_initialization
-  access_config_git diff "$@"
 }
 
 jump()
@@ -239,15 +209,18 @@ case "$command" in
   | rm \
   | apply \
   | backup \
-  | restore \
+  | restoreall \
+  | jump)
+    shift
+    $command "$@"
+    ;;
+  restore \
   | commit \
   | pull \
   | push \
   | status \
-  | diff \
-  | jump)
-    shift
-    $command "$@"
+  | diff )
+    access_config_git "$@"
     ;;
   "")
     print_error "no operation specified (use 'help' for help)"
