@@ -16,27 +16,6 @@ config_root_path()
   echo "$config_checkout_path/$repository_name"
 }
 
-home_path()
-{
-  if [[ -n $SUDO_USER ]]
-  then
-    echo "/home/$SUDO_USER"
-  else
-    echo "$HOME"
-  fi
-}
-
-resolve_path()
-{
-  if [[ $1 =~ ~* ]]
-  then
-    echo "$(echo "$1" | sed "s|~|$(home_path)|")"
-    return 0
-  fi
-
-  echo "$1"
-}
-
 require_root_privilege()
 {
   if [[ $(id -u) -ne 0 ]]
@@ -136,7 +115,6 @@ add()
 
   for path in "$@"
   do
-    path="$(resolve_path "$path")"
     cp -a --parent "$(realpath "$path")" "$(config_root_path)"
   done
 
@@ -153,7 +131,6 @@ rm()
 {
   for path in "$@"
   do
-    path="$(resolve_path "$path")"
     access_config_git rm -r "$path"
   done
 }
