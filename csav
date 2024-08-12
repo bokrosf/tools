@@ -138,20 +138,42 @@ rm()
 apply()
 {
   require_root_privilege
+  require_initialization
   local destination_path="$1"
+  shift
 
-  if [[ -z "$destination_path" ]]
+  if [[ -z $destination_path ]]
   then
     print_error "destination path must be supplied"
     exit 1
   fi
 
-  require_initialization
+  destination_path="$(realpath -m "$destination_path")"
+
+  if [[ -e $destination_path ]] && ! [[ -d $destination_path ]]
+  then
+    print_error "destination path must be a directory"
+    exit 1
+  fi
+
+  if ! [[ -d $destination_path ]]
+  then
+    mkdir -p "$destination_path"
+  fi
+
   cd "$(config_root_path)"
 
-  for saved_item in $(ls -A | grep -v -e '.git' -e 'README.md')
+  if (( $# > 0 ))
+  then
+    subtree_paths=("$@")
+  else
+    mapfile -t subtree_paths < <(ls -A | grep -v -e ".git" -e "README.md")
+  fi
+
+  for subtree in "${subtree_paths[@]}"
   do
-    cp -a "$saved_item" "$destination_path"
+    subtree=$(echo "$subtree" | sed "s|^/||")
+    cp -a --parent "$subtree" "$destination_path"
   done
 }
 
