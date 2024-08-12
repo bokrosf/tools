@@ -25,7 +25,7 @@ require_root_privilege()
   fi
 }
 
-enforce_initialization()
+require_initialization()
 {
   if [[ ! -d $(config_root_path)/.git ]]
   then
@@ -111,7 +111,7 @@ list()
 
 add()
 {
-  enforce_initialization
+  require_initialization
 
   for path in "$@"
   do
@@ -146,7 +146,7 @@ apply()
     exit 1
   fi
 
-  enforce_initialization
+  require_initialization
   cd "$(config_root_path)"
 
   for saved_item in $(ls -A | grep -v -e '.git' -e 'README.md')
@@ -162,14 +162,14 @@ backup()
 
 restoreall()
 {
-  enforce_initialization
+  require_initialization
   access_config_git restore -S -W "*"
   access_config_git clean -dfx
 }
 
 jump()
 {
-  enforce_initialization
+  require_initialization
 
   if [[ -z $jump_terminal_command ]]
   then
