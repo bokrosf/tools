@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Configurable variables
+# Configuration variables
 readonly config_checkout_path="/home/bokrosf"
 readonly repository_name="configs"
 readonly repository_url="https://github.com/bokrosf/$repository_name"
