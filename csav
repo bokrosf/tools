@@ -230,7 +230,11 @@ readonly command="$1"
 
 case "$command" in
   help \
-  | init \
+  | -h \
+  | --help)
+    help
+    ;;
+  init \
   | list \
   | add \
   | addcomm \
