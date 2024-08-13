@@ -53,7 +53,7 @@ init()
   # Obtaining the repository.
   if [[ -d $(config_root_path)/.git ]]
   then
-    echo "initialized"
+    echo "Already initialized."
     return 0
   fi
 
