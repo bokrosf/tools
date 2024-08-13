@@ -20,7 +20,7 @@ require_root_privilege()
 {
   if [[ $(id -u) -ne 0 ]]
   then
-    print_error "must be superuser to perform this operation"
+    print_error "must be superuser to perform this operation."
     exit 1
   fi
 }
@@ -30,7 +30,7 @@ require_initialization()
   if [[ ! -d $(config_root_path)/.git ]]
   then
     print_error "init required, not a git repository: '$(config_root_path)'"
-    echo "  use \"csav init\" to clone the repository"
+    echo "  use \"csav init\" to clone the repository."
     exit 1
   fi
 }
@@ -144,7 +144,7 @@ apply()
 
   if [[ -z $destination_path ]]
   then
-    print_error "destination path must be supplied"
+    print_error "destination path must be supplied."
     exit 1
   fi
 
@@ -152,7 +152,7 @@ apply()
 
   if [[ -e $destination_path ]] && ! [[ -d $destination_path ]]
   then
-    print_error "destination path must be a directory"
+    print_error "destination path must be a directory."
     exit 1
   fi
 
@@ -195,7 +195,7 @@ jump()
 
   if [[ -z $jump_terminal_command ]]
   then
-    print_error "can not jump to '$(config_root_path)', 'jump_terminal_command' variable must be set"
+    print_error "can not jump to '$(config_root_path)', 'jump_terminal_command' variable must be set".
     exit 1
   fi
 
@@ -204,19 +204,19 @@ jump()
 
 if [[ -z $config_checkout_path ]]
 then
-  print_error "'config_checkout_path' variable must be set"
+  print_error "'config_checkout_path' variable must be set."
   exit 1
 fi
 
 if [[ -z $repository_name ]]
 then
-  print_error "'repository_name' variable must be set"
+  print_error "'repository_name' variable must be set."
   exit 1
 fi
 
 if [[ -z $repository_url ]]
 then
-  print_error "'repository_url' variable must be set"
+  print_error "'repository_url' variable must be set."
   exit 1
 fi
 
