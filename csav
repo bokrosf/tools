@@ -212,14 +212,26 @@ apply()
     mkdir -p "$destination_path"
   fi
 
-  cd "$(config_root_path)"
+  declare -a subtree_paths
 
   if (( $# > 0 ))
   then
-    subtree_paths=("$@")
+    for path in "$@"
+    do
+      local system_path="$(realpath -m "$path")"
+
+      if [[ -e $(config_root_path)$system_path ]]
+      then
+        subtree_paths+=("$system_path")
+      else
+        print_error "not existing: $system_path"
+      fi
+    done
   else
-    mapfile -t subtree_paths < <(ls -A | grep -v -e ".git" -e "README.md")
+    mapfile -t subtree_paths < <(ls -A $(config_root_path) | grep -v -e ".git" -e "README.md")
   fi
+
+  cd "$(config_root_path)"
 
   for subtree in "${subtree_paths[@]}"
   do
