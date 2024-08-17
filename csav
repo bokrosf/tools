@@ -197,7 +197,6 @@ rm()
 
 apply()
 {
-  require_root_privilege
   require_initialization
   local destination_path="$1"
   shift
