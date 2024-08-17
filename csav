@@ -61,7 +61,7 @@ help()
           Copies the saved subtrees to the path where they were saved from
           by preserving the tree structure. If no subtree specified
           then all saved files copied. If subtrees specified then
-          only they copied to the destination.
+          only those copied to the destination.
       backup
           Adds all files to the saved files that are already present.
           This way all saved files can be refreshed to store the
