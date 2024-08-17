@@ -57,8 +57,8 @@ help()
           Adds files or directories to the saved files.
       rm <path>...
           Removes files or directories from saved files.
-      apply <destination> [<subtree>...]
-          Copies saved files to the specified destination 
+      apply [<subtree>...]
+          Copies the saved subtrees to the path where they were saved from
           by preserving the tree structure. If no subtree specified
           then all saved files copied. If subtrees specified then
           only they copied to the destination.
@@ -190,28 +190,6 @@ rm()
 apply()
 {
   require_initialization
-  local destination_path="$1"
-  shift
-
-  if [[ -z $destination_path ]]
-  then
-    print_error "destination path must be supplied."
-    exit 1
-  fi
-
-  destination_path="$(realpath -m "$destination_path")"
-
-  if [[ -e $destination_path ]] && ! [[ -d $destination_path ]]
-  then
-    print_error "destination path must be a directory."
-    exit 1
-  fi
-
-  if ! [[ -d $destination_path ]]
-  then
-    mkdir -p "$destination_path"
-  fi
-
   declare -a subtree_paths
 
   if (( $# > 0 ))
@@ -236,7 +214,7 @@ apply()
   for subtree in "${subtree_paths[@]}"
   do
     subtree=$(echo "$subtree" | sed "s|^/||")
-    cp -a --parent "$subtree" "$destination_path"
+    cp -a --parent "$subtree" /
   done
 }
 
