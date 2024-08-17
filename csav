@@ -55,8 +55,6 @@ help()
           Lists the saved configuration files.
       add <path>...
           Adds files or directories to the saved files.
-      addcomm <path>...
-          Same as add command but also commits the added items.
       rm <path>...
           Removes files or directories from saved files.
       apply <destination> [<subtree>...]
@@ -181,12 +179,6 @@ add()
   access_config_git add "*"
 }
 
-addcomm()
-{
-  add "$@"
-  commit
-}
-
 rm()
 {
   for path in "$@"
@@ -290,7 +282,6 @@ case "$command" in
   init \
   | list \
   | add \
-  | addcomm \
   | rm \
   | apply \
   | backup \
