@@ -40,6 +40,11 @@ access_config_git()
   git -C "$(config_root_path)" "$@"
 }
 
+remove_path_prefix()
+{
+  echo "$(echo "$1" | sed "s|^"$2"||")"
+}
+
 help()
 {
   # TODO Implement displaying usage.
@@ -157,8 +162,10 @@ init()
 
 list()
 {
-  find "$(config_root_path)" -type f ! -path "*.git*" ! -path "*README.md" \
-    | sed "s|"$(config_root_path)"||"
+  for item in $(find "$(config_root_path)" -type f ! -path "*.git*" ! -path "*README.md")
+  do
+    echo "$(remove_path_prefix "$item" "$(config_root_path)")"
+  done
 }
 
 add()
@@ -173,10 +180,14 @@ add()
 
   for path in "$@"
   do
-    cp -a --parent "$(realpath "$path")" "$(config_root_path)"
-  done
+    path="$(realpath "$path")"
+    cp -a --parent "$path" "$(config_root_path)"
 
-  access_config_git add "*"
+    if [[ $? == 0 ]]
+    then
+      access_config_git add "$(remove_path_prefix "$path" /)"
+    fi
+  done
 }
 
 rm()
@@ -213,7 +224,7 @@ apply()
 
   for subtree in "${subtree_paths[@]}"
   do
-    subtree=$(echo "$subtree" | sed "s|^/||")
+    subtree="$(remove_path_prefix "$subtree" /)"
     cp -a --parent "$subtree" /
   done
 }
