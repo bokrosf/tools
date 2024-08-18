@@ -194,7 +194,9 @@ rm()
 {
   for path in "$@"
   do
-    access_config_git rm -r "$(config_root_path)$path"
+    path="$(realpath "$path")"
+    path="$(remove_path_prefix "$path" /)"
+    access_config_git rm -r "$path"
   done
 }
 
