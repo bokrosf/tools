@@ -4,3 +4,4 @@
 
 url_file_name="archlinux-x86_64.iso"
 curl --output "${1:-$url_file_name}" "https://geo.mirror.pkgbuild.com/iso/latest/$url_file_name"
+curl --output "${1:-$url_file_name}.sig" "https://geo.mirror.pkgbuild.com/iso/latest/$url_file_name.sig"
