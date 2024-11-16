@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug",
+            "type": "cppdbg",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/build/debug",
+            "program": "${workspaceFolder}/build/debug/<executable_name>",
+            "externalConsole": false
+        }
+    ]
+}

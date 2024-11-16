@@ -1,0 +1,1 @@
+Contains configuration templates. Placeholder values are in the form of **<value_name>**. They must be specified according to the actual configuration.
