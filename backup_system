@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Saves system details for restoration, configurations, installed programs ...
+
+echo "Saving installed program list..."
+programs_path=~/program_list
+mkdir -p "$programs_path"
+pacman -Qqm > "$programs_path/aur"
+(pacman -Qqe | grep -v -f "$programs_path/aur") > "$programs_path/official"
+
+echo "Saving configurations..."
+sudo csav backup
+
+echo 'Finished backup.
+  Use "csav status" command to check what has been staged before commiting it.
+  Use "csav commit; csav push" commands to persist online.'
