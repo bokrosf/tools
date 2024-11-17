@@ -60,6 +60,8 @@ help()
           Lists the saved configuration files.
       add <path>...
           Adds files or directories to the saved files.
+      mv <path>...
+          Moves or renames saved files or directories.
       rm <path>...
           Removes files or directories from saved files.
       apply [<subtree>...]
@@ -190,6 +192,20 @@ add()
   done
 }
 
+mv()
+{
+  declare -a transformed_paths
+
+  for path in "$@"
+  do
+    path="$(realpath "$path")"
+    path="$(remove_path_prefix "$path" /)"
+    transformed_paths+=("$path")
+  done
+
+  access_config_git mv "${transformed_paths[@]}"
+}
+
 rm()
 {
   for path in "$@"
@@ -285,6 +301,7 @@ case "$command" in
   init \
   | list \
   | add \
+  | mv \
   | rm \
   | apply \
   | backup \
