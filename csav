@@ -164,7 +164,7 @@ init()
 
 list()
 {
-  for item in $(find "$(config_root_path)" -type f ! -path "*.git*" ! -path "*README.md")
+  for item in $(find "$(config_root_path)" -type f,l ! -path "*.git*" ! -path "*README.md")
   do
     echo "$(remove_path_prefix "$item" "$(config_root_path)")"
   done
@@ -182,8 +182,8 @@ add()
 
   for path in "$@"
   do
-    path="$(realpath "$path")"
-    cp -a --parent "$path" "$(config_root_path)"
+    path="$(realpath --no-symlinks "$path")"
+    cp -a --parent --no-dereference "$path" "$(config_root_path)"
 
     if [[ $? == 0 ]]
     then
@@ -198,7 +198,7 @@ mv()
 
   for path in "$@"
   do
-    path="$(realpath "$path")"
+    path="$(realpath --no-symlinks "$path")"
     path="$(remove_path_prefix "$path" /)"
     transformed_paths+=("$path")
   done
@@ -210,7 +210,7 @@ rm()
 {
   for path in "$@"
   do
-    path="$(realpath "$path")"
+    path="$(realpath --no-symlinks "$path")"
     path="$(remove_path_prefix "$path" /)"
     access_config_git rm -r "$path"
   done
@@ -225,9 +225,9 @@ apply()
   then
     for path in "$@"
     do
-      local system_path="$(realpath -m "$path")"
+      local system_path="$(realpath -m --no-symlinks "$path")"
 
-      if [[ -e $(config_root_path)$system_path ]]
+      if [[ -e $(config_root_path)$system_path ]] || [[ -L $(config_root_path)$system_path ]]
       then
         subtree_paths+=("$system_path")
       else
@@ -243,7 +243,7 @@ apply()
   for subtree in "${subtree_paths[@]}"
   do
     subtree="$(remove_path_prefix "$subtree" /)"
-    cp -a --parent "$subtree" /
+    cp -a --parent --no-dereference "$subtree" /
   done
 }
 
