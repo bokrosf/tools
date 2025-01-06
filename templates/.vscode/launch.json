@@ -7,6 +7,7 @@
             "request": "launch",
             "cwd": "${workspaceFolder}/build/debug",
             "program": "${workspaceFolder}/build/debug/<executable_name>",
+            "preLaunchTask": "<label_of_the_debug_task_in_tasks_json>",
             "externalConsole": false
         }
     ]
