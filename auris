@@ -1,0 +1,34 @@
+readonly root_path="/home/bokrosf/aur"
+
+function help()
+{
+  echo "Updates all packages."
+}
+
+function install_package()
+{
+  makepkg --syncdeps --install --rmdeps --clean
+  git clean -dfx
+}
+
+function update()
+{
+  for package in $(ls "$root_path")
+  do
+    echo "UPDATING Begin package: $package"
+    cd "$root_path/$package"
+    git clean -dfx
+    git pull
+    install_package
+    echo "UPDATING Finished package: $package"
+  done
+}
+
+case "$1" in
+  "-h" | "--help")
+    help
+    ;;
+  "")
+    update
+    ;;
+esac
