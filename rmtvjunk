@@ -2,14 +2,7 @@
 
 help()
 {
-  echo "usage: rmtvjunk PATH"
-  echo "   or: rmtvjunk -l | --list"
-  echo ""
-  echo "Removes junk files created by the TV's operating system."
-  echo ""
-  echo "options:"
-  echo "  -h, --help: displays help"
-  echo "  -l, --list: lists the directories, files to be removed."
+  cat "doc/$(basename "$0").help"
 }
 
 removed_elements=(Alarms Android DCIM Download Movies Music Notifications Pictures Podcasts Ringtones)
