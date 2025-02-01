@@ -47,62 +47,7 @@ remove_path_prefix()
 
 help()
 {
-  # TODO Implement displaying usage.
-  echo 'usage: csav <operation> [<args>...]
-  operations:
-      help, -h, --help
-          Displays help.
-      init
-          Checks out the git repository containing the configuration files
-          and initializes file permissions and ownerships. Required configuration 
-          variables must be set. See "configuration variables" section.
-      list
-          Lists the saved configuration files.
-      add <path>...
-          Adds files or directories to the saved files.
-      mv <path>...
-          Moves or renames saved files or directories.
-      rm <path>...
-          Removes files or directories from saved files.
-      apply [<subtree>...]
-          Copies the saved subtrees to the path where they were saved from
-          by preserving the tree structure. If no subtree specified
-          then all saved files copied. If subtrees specified then
-          only those copied to the destination.
-      backup
-          Adds all files to the saved files that are already present.
-          This way all saved files can be refreshed to store the
-          value present at the current system.
-      restoreall
-          Removes all uncommited changes from the repository.
-      jump
-          Opens a new terminal instance and navigates to the repository.
-          Useful if repository maintenance needed.
-          Terminal configured by the "jump_terminal_command" variable.
-      restore [<args>...]
-          git restore [<args>...] called on the repository.
-      commit [<args>...]
-          git commit [<args>...] called on the repository.
-      pull [<args>...]
-          git pull [<args>...] called on the repository.
-      push [<args>...]
-          git push [<args>...] called on the repository.
-      status [<args>...]
-          git status [<args>...] called on the repository.
-      diff [<args>...]
-          git diff [<args>...] called on the repository.
-
-  configuration variables
-      mandatory
-          config_checkout_path
-              Absolute path where the repository that contains the configurations checked out.
-          repository_name
-              Name of the configuration repository.
-          repository_url
-              Url of the configuration repository.
-      optional
-          jump_terminal_command
-              Terminal opening command that executed when the "jump" command specified.'
+  cat "doc/$(basename "$0").help"
 }
 
 init()
