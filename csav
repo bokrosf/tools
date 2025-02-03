@@ -47,7 +47,7 @@ remove_path_prefix()
 
 help()
 {
-  cat "doc/$(basename "$0").help"
+  cat "$(dirname "$0")/doc/$(basename "$0").help"
 }
 
 init()

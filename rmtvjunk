@@ -2,7 +2,7 @@
 
 help()
 {
-  cat "doc/$(basename "$0").help"
+  cat "$(dirname "$0")/doc/$(basename "$0").help"
 }
 
 removed_elements=(Alarms Android DCIM Download Movies Music Notifications Pictures Podcasts Ringtones)
