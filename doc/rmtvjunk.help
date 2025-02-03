@@ -1,5 +1,5 @@
 usage: rmtvjunk PATH
-  or:  rmtvjunk -l | --list
+   or:  rmtvjunk -l | --list
 
   Removes junk files created by the TV's operating system.
 
