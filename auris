@@ -5,12 +5,6 @@ function help()
   echo "Updates all packages."
 }
 
-function install_package()
-{
-  makepkg --syncdeps --install --rmdeps --clean
-  git clean -dfx
-}
-
 function update()
 {
   for package in $(ls "$root_path")
@@ -19,7 +13,8 @@ function update()
     cd "$root_path/$package"
     git clean -dfx
     git pull
-    install_package
+    makepkg --syncdeps --install --rmdeps --clean
+    git clean -dfx
     echo "UPDATING Finished package: $package"
   done
 }
