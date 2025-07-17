@@ -29,3 +29,6 @@ Without the Xbox app the GFWL authentication fails, it's required.
 - Download the Xbox app on Windows.
 - Sign in with a Microsoft account.
 - Sign in with GFWL when the game runs.
+
+## Errors
+- Starting the game with **Binaries/Startup.exe** will result in the following error message: **To play Gears of War, please double-click Startup.exe.** The solution is to start the **autorun.exe** on the disc as administrator.
