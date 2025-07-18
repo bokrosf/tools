@@ -20,7 +20,7 @@ The original executable is not compatible with the patch so it crashes after the
 ## Running
 If it's not run from the disk's autorun menu than it crashes.
 - Insert the disk into the drive.
-- Run the disk's autorun.
+- Run the disk's **autorun.exe** as **administrator**. Starting the game with **Binaries/Startup.exe** will result in the following error message: **To play Gears of War, please double-click Startup.exe.**
 - Click on Play.
 - Create an offline GFWL account, that is required for saving, by pressing **HOME** or **F1** key. Click on **create new account** then scroll down and click on the **offline** account link.
 
@@ -29,6 +29,3 @@ Without the Xbox app the GFWL authentication fails, it's required.
 - Download the Xbox app on Windows.
 - Sign in with a Microsoft account.
 - Sign in with GFWL when the game runs.
-
-## Errors
-- Starting the game with **Binaries/Startup.exe** will result in the following error message: **To play Gears of War, please double-click Startup.exe.** The solution is to start the **autorun.exe** on the disc as administrator.
