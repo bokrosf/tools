@@ -1,3 +1,0 @@
-#!/bin/bash
-
-pacman -Q --foreign | sed 's| [[:digit:]].*||'
