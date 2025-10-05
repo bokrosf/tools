@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=__name__
+Exec="STEAM_COMPAT_DATA_PATH=~/.steam/steam/steamapps/compatdata STEAM_COMPAT_CLIENT_INSTALL_PATH=~/.steam  ~/.local/share/Steam/steamapps/common/'Proton 9.0 (Beta)'/proton run __exe_path__"

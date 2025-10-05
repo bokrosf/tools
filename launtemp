@@ -1,0 +1,40 @@
+#!/bin/bash
+
+readonly name="$1"
+executable_path="$2"
+
+print_error()
+{
+  echo "launtemp: $1"
+}
+
+if (( $# == 1 )) && [[ $1 == --help ]]
+then
+  cat "$(dirname "$0")/doc/$(basename "$0").help"
+  exit 0
+fi
+
+if [[ -z $name ]]
+then
+  print_error "missing name operand"
+  exit 1
+fi
+
+if [[ -z $executable_path ]]
+then
+  print_error "missing executable path operand"
+  exit 1
+fi
+
+executable_path="$(realpath "$executable_path")"
+
+if ! [[ -x $executable_path ]]
+then
+  print_error "not existing executable"
+  exit 1
+fi
+
+readonly launcher=~/.local/share/applications/"$name.desktop"
+cp "$(dirname "$0")/templates/launchers/proton.desktop" "$launcher"
+sed -i "s|__name__|$name|" "$launcher"
+sed -i "s|__exe_path__|$executable_path|" "$launcher"

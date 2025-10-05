@@ -1,0 +1,7 @@
+usage: launtemp LAUNCHER_NAME EXECUTABLE_PATH
+   or:  launtemp --help
+
+  Creates a desktop file that can be used to launch the executable with Steam Proton.
+
+  options:
+    -h, --help: displays help
