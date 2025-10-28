@@ -1,0 +1,3 @@
+google:
+  - Disables AI answers by using the Web tab.
+  - url: https://www.google.com/search?q=%s&udm=14
