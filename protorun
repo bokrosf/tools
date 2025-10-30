@@ -1,0 +1,28 @@
+#!/bin/bash
+
+readonly program_name=""
+readonly proton_version="Proton 9.0 (Beta)"
+exe_path="$1"
+
+export STEAM_COMPAT_DATA_PATH=~/.steam/steam/steamapps/compatdata
+export STEAM_COMPAT_CLIENT_INSTALL_PATH=~/.steam
+
+print_error()
+{
+  echo "$(basename "$0"): $1"
+}
+
+if (( $# < 1 ))
+then
+  print_error "Missing executable operand. Try --help for more information."
+fi
+
+if [[ $1 == --help ]]
+then
+  cat "$(dirname "$0")/doc/$(basename "$0").help"
+  exit 0;
+fi
+
+exe_path="$(realpath "$exe_path")"
+
+~/.local/share/Steam/steamapps/common/"$proton_version"/proton run "$exe_path"
