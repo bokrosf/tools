@@ -1,0 +1,42 @@
+#!/bin/bash
+
+readonly title="$1"
+readonly season="$2"
+
+print_error()
+{
+  echo "$(basename "$0"): $1"
+}
+
+if [[ $1 = --help ]]
+then
+  cat "$(dirname "$0")/doc/$(basename "$0").help"
+  exit 0
+fi
+
+if [[ -z $title ]]
+then
+  print_error "Missing title."
+  exit 1
+fi
+
+shift
+
+if [[ -z $season ]]
+then
+  print_error "Missing season number."
+  exit 1
+fi
+
+shift
+episode=1
+
+for file in "$@"
+do
+  extension="${file##*.}"
+  season_part="$(printf "%02d" $season)"
+  episode_part="$(printf "%02d" $episode)"
+  new_name="$title ${season_part}x${episode_part}.$extension"
+  mv "$file" "$new_name"
+  ((++episode))
+done

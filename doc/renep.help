@@ -1,0 +1,17 @@
+usage: renep <title> <season> <files>...
+   or:  renep --help
+
+   Renames the specified episode files to the following format:
+     <title> <season>x<episode>
+
+  options:
+    -h, --help: displays help
+
+  examples:
+    renep "Kill la Kill (2013)" 1 *.mkv
+
+    produces:
+      Kill la Kill (2013) 01x01
+      Kill la Kill (2013) 01x02
+      ...
+      Kill la Kill (2013) 01x24
