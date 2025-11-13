@@ -1,42 +1,82 @@
 #!/bin/bash
 
-readonly title="$1"
-readonly season="$2"
+main()
+{
+  parse_arguments "$@"
+  validate_arguments
+  episode=1
+
+  for file in "${files[@]}"
+  do
+    extension="${file##*.}"
+    season_part="$(printf "%02d" $season)"
+    episode_part="$(printf "%02d" $episode)"
+    new_name="$title ${season_part}x${episode_part}.$extension"
+    mv "$file" "$new_name"
+    ((++episode))
+  done
+}
+
+help()
+{
+  cat "$(dirname "$0")/doc/$(basename "$0").help"
+}
 
 print_error()
 {
   echo "$(basename "$0"): $1"
 }
 
-if [[ $1 = --help ]]
-then
-  cat "$(dirname "$0")/doc/$(basename "$0").help"
-  exit 0
-fi
+parse_arguments()
+{
+  while (( $# > 0 ))
+  do
+    case "$1" in
+      -h | --help)
+        help
+        exit 0
+        ;;
+      -t | --title)
+        shift
+        title="$1"
+        shift
+        ;;
+      -s | --season)
+        shift
+        season="$1"
+        shift
+        ;;
+      -*)
+        print_error "unrecognized operand '$1'"
+        exit 1
+        ;;
+      *)
+        files+=("$1")
+        shift
+        ;;
+    esac
+  done
+}
 
-if [[ -z $title ]]
-then
-  print_error "Missing title."
-  exit 1
-fi
+validate_arguments()
+{
+  if [[ -z $title ]]
+  then
+    print_error "missing title."
+    exit 1
+  fi
 
-shift
+  if [[ -z $season ]]
+  then
+    print_error "missing season number."
+    exit 1
+  fi
 
-if [[ -z $season ]]
-then
-  print_error "Missing season number."
-  exit 1
-fi
+  if (( ${#files[@]} < 1 ))
+  then
+    print_error "missing file operand."
+    exit 1
+  fi
+}
 
-shift
-episode=1
-
-for file in "$@"
-do
-  extension="${file##*.}"
-  season_part="$(printf "%02d" $season)"
-  episode_part="$(printf "%02d" $episode)"
-  new_name="$title ${season_part}x${episode_part}.$extension"
-  mv "$file" "$new_name"
-  ((++episode))
-done
+main "$@"
