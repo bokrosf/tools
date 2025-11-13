@@ -1,0 +1,37 @@
+#!/bin/bash
+
+main()
+{
+  parse_arguments "$@"
+  validate_arguments
+}
+
+help()
+{
+  cat "$(dirname "$0")/doc/$(basename "$0").help"
+}
+
+print_error()
+{
+  echo "$(basename "$0"): $1"
+}
+
+parse_arguments()
+{
+  while (( $# > 1 ))
+  do
+    case "$1" in
+      -h | --help)
+        help
+        exit 0
+        ;;
+    esac
+  done
+}
+
+validate_arguments()
+{
+
+}
+
+main "$@"
